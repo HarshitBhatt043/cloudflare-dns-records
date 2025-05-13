@@ -60,15 +60,28 @@ graph TD
 **records.yaml** format:
 
 ```yaml
+# Cloudflare DNS configuration for the zone
+cloudflare_zone: example.net
+cloudflare_zone_id: YOUR_ZONE_ID_HERE  # Found on the Cloudflare Dashboard → Overview page
+
 records:
+  # A record (IPv4 address)
   - type: A
-    name: www
-    value: 192.0.2.1
-    proxy: true
+    name: www                 # Full domain: www.example.net
+    content: 192.0.2.1          # IPv4 address
+    proxied: true               # true = proxied through Cloudflare, false = DNS only
+
+  # CNAME record (alias)
   - type: CNAME
-    name: blog
-    value: example.net
-    proxy: false
+    name: blog                # Full domain: blog.example.net
+    content: example.net        # Canonical name to point to
+    proxied: false              # CNAMEs can also be proxied or DNS only
+
+  # AAAA record (IPv6 address)
+  - type: AAAA
+    name: ipv6                # Full domain: ipv6.example.net
+    content: 2001:db8::1        # IPv6 address
+    proxied: true
 ```
 
 ## Branch Workflow
